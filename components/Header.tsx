@@ -1,5 +1,5 @@
 import React, {useCallback, useRef, useState} from 'react';
-import {AgendaList, CalendarProvider, WeekCalendar} from 'react-native-calendars';
+import {CalendarProvider, WeekCalendar} from 'react-native-calendars';
 import {isEmpty} from 'lodash';
 import {Alert, Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {agendaItems, getMarkedDates} from "@/components/agendaItems";
@@ -91,11 +91,9 @@ const ExpandableCalendarScreen = (props: Props) => {
 
   const onDayPress = useCallback((day) => {
     setSelectedDate(day.dateString);
+    // TODO: we can make a call here to do the animation forward or backwards
   }, []);
 
-  const renderItem = useCallback(({item}: any) => {
-    return <AgendaItem item={item}/>;
-  }, []);
 
   return (
     <CalendarProvider
@@ -109,11 +107,11 @@ const ExpandableCalendarScreen = (props: Props) => {
         markedDates={{...marked.current, [selectedDate]: {selected: true, selectedColor: 'blue'}}}
         onDayPress={onDayPress}
       />
-      <AgendaList
-        sections={ITEMS}
-        renderItem={renderItem}
-        sectionStyle={styles.section}
-      />
+      {/*<AgendaList*/}
+      {/*  sections={ITEMS}*/}
+      {/*  renderItem={renderItem}*/}
+      {/*  sectionStyle={styles.section}*/}
+      {/*/>*/}
     </CalendarProvider>
   );
 };
