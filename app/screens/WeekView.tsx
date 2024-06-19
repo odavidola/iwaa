@@ -1,53 +1,60 @@
-import React, { useState } from 'react';
-import { View, Button, StyleSheet, Text } from 'react-native';
+import React, {useState} from 'react';
+import {Animated, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import CalendarHeader from "@/components/Header";
+import ScrollView = Animated.ScrollView;
 
-const WeekView = ({ navigation }) => {
-  const [selectedDay, setSelectedDay] = useState(null);
-  const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const WeekView = () => {
+  const [selectedDate, setSelectedDate] = useState('2024-06-16'); // Default selected date
 
-  const handleDayPress = (day) => {
-    setSelectedDay(day); // Set the selected day
-  };
-
-  const renderContent = () => {
-    switch (selectedDay) {
-      case 'Mon':
-        return <Text>Content for Monday</Text>;
-      case 'Tue':
-        return <Text>Content for Tuesday</Text>;
-      case 'Wed':
-        return <Text>Content for Wednesday</Text>;
-      case 'Thu':
-        return <Text>Content for Thursday</Text>;
-      case 'Fri':
-        return <Text>Content for Friday</Text>;
-      case 'Sat':
-        return <Text>Content for Saturday</Text>;
-      case 'Sun':
-        return <Text>Content for Sunday</Text>;
-      default:
-        return <Text>Select a day to see content</Text>;
-    }
+  const onDayPress = (day) => {
+    setSelectedDate(day.dateString);
   };
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        {days.map((day) => (
-          <Button key={day} title={day} onPress={() => handleDayPress(day)} />
-        ))}
-      </View>
-      <View style={styles.content}>
-        {renderContent()}
-      </View>
+      <CalendarHeader weekView={true}/>
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <Text style={styles.sectionHeader}>Morning</Text>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.addButtonText}>+</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.sectionHeader}>Afternoon</Text>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.addButtonText}>+</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.sectionHeader}>Night</Text>
+        <TouchableOpacity style={styles.addButton}>
+          <Text style={styles.addButtonText}>+</Text>
+        </TouchableOpacity>
+      </ScrollView>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 10 },
-  header: { flexDirection: 'row', justifyContent: 'space-around', marginBottom: 20 },
-  content: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+  container: {
+    flex: 1,
+  },
+  scrollContainer: {
+    padding: 16,
+  },
+  sectionHeader: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 8,
+  },
+  addButton: {
+    backgroundColor: '#f0f0f0',
+    padding: 16,
+    borderRadius: 8,
+    alignItems: 'center',
+    marginVertical: 8,
+  },
+  addButtonText: {
+    fontSize: 24,
+  },
 });
 
 export default WeekView;
